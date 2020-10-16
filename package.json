@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "element-ui": "^2.13.2",
+    "sass-resources-loader": "^2.0.3",
     "simple-progress-webpack-plugin": "^1.1.2",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",

@@ -16,6 +16,12 @@ const routes: Array<RouteConfig> = [
     component: () =>
       import(/* webpackChunkName: "login" */ "../views/Login/login.vue")
   },
+  {
+    path: "/taskSelect",
+    name: "TaskSelect",
+    component: () =>
+      import(/* webpackChunkName: "task" */ "../views/task/taskSelect.vue")
+  },
 ];
 
 const router = new VueRouter({
