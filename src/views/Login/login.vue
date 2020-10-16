@@ -6,7 +6,7 @@
     <div class="login_options">
       <el-input class="mb20" v-model="accont" clearable placeholder="账号" />
       <el-input class="mb20" v-model="passWord" show-password clearable placeholder="密码"/>
-      <span class="custom_btn custom_shadow bg_orange text_white" @click="_login">登 陆</span>
+      <span class="custom_btn custom_shadow bg_orange text_white" @click="_login">登 录</span>
     </div>
   </div>
 </template>

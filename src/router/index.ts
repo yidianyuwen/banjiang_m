@@ -16,11 +16,23 @@ const routes: Array<RouteConfig> = [
     component: () =>
       import(/* webpackChunkName: "login" */ "../views/Login/login.vue")
   },
-  {
+  { //
     path: "/taskSelect",
     name: "TaskSelect",
     component: () =>
       import(/* webpackChunkName: "task" */ "../views/task/taskSelect.vue")
+  },
+  {  // 任务盘点
+    path: "/taskInventory",
+    name: "TaskInventory",
+    component: () =>
+      import(/* webpackChunkName: "task" */ "../views/task/taskInventory.vue")
+  },
+  { // 历史记录
+    path: "/historyRecord",
+    name: "HistoryRecord",
+    component: () =>
+      import(/* webpackChunkName: "task" */ "../views/task/historyRecord.vue")
   },
 ];
 
