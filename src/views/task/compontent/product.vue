@@ -45,7 +45,7 @@ import { Component, Vue, Prop, Watch } from "vue-property-decorator";
   name: "Product",
   components: {}
 })
-export default class TaskInventory extends Vue {
+export default class Product extends Vue {
   // @Prop() productData!: any;
   private productData = [
     {
