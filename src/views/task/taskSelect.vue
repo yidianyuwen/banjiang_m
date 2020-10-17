@@ -26,7 +26,7 @@
 <script lang="ts">
 /**
  * Data: 2020-10-17
- * auth: Nicky
+ * Author: Nicky
  * Last Modify:
  */
 
