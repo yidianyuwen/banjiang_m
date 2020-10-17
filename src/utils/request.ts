@@ -6,7 +6,6 @@
 
 import axios from "axios"
 import { Message, MessageBox } from 'element-ui'
-import '@/assets/css/main.css'
 
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
@@ -23,7 +22,7 @@ service.interceptors.request.use(
     config.headers['version'] = '1.0';
     config.headers['timestamp'] = new Date().getTime().toString();
 
-    config.data = {dataStr: config.data};   // 明文输出报文
+    config.data = {dataStr: config.data};
     return config
   },
   (error) => {

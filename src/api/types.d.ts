@@ -7,3 +7,7 @@
 export interface history_record {
   id?: any,
 }
+
+export interface product_data {
+  id?: any,
+}

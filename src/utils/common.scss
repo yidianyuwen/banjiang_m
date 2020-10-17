@@ -7,6 +7,8 @@
 $white: #ffffff;
 $primary: #1A67F5;
 $btn_primary: #FF4A3D;
+$text_tip: #DE3C3C;
+$line_gray: #bbbbbb;
 
 $fz10:0.65rem;
 $fz12:0.75rem;
@@ -30,14 +32,39 @@ $fz64:4rem;
 
 $mobile_width:414px;
 
+.fz10 {
+  font-size: $fz10;
+}
+.fz12 {
+  font-size: $fz12;
+}
+.fz14 {
+  font-size: $fz14;
+}
+.fz16 {
+  font-size: $fz16;
+}
+.fz18 {
+  font-size: $fz18;
+}
+.fz20 {
+  font-size: $fz20;
+}
+
 .text_white {
   color: $white;
+}
+.text_tip {
+  color: $text_tip;
 }
 
 .bg_orange {
   background-color: $btn_primary;
 }
 
+.mb5 {
+  margin-bottom: 5px;
+}
 .mb10 {
   margin-bottom: 10px;
 }
@@ -56,10 +83,25 @@ $mobile_width:414px;
   display: flex;
   flex-direction: column;
 }
+.flex_full {
+  flex: 1;
+}
+.aline_center {
+  align-items: center;
+}
+.text_center {
+  text-align: center;
+}
+
 
 .el-main {
   padding: 0 !important;
   margin: 0 !important;
+}
+.container {
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
 }
 
 .clearfix:before,

@@ -34,6 +34,12 @@ const routes: Array<RouteConfig> = [
     component: () =>
       import(/* webpackChunkName: "task" */ "../views/task/historyRecord.vue")
   },
+  { // 成功提示页
+    path: "/customSuccess",
+    name: "CustomSuccess",
+    component: () =>
+      import(/* webpackChunkName: "task" */ "../compontent/CustomSuccess.vue")
+  },
 ];
 
 const router = new VueRouter({
