@@ -16,13 +16,13 @@ import { Component, Vue, Prop, Watch } from "vue-property-decorator";
   name: "customSuccess",
   components: {}
 })
-export default class TaskInventory extends Vue {
+export default class CustomSuccess extends Vue {
   private status = this.$route.params.status;
   // mounted() {}
 
   confirm() {
     console.log("完成");
-    this.$router.push({ name: "TaskSelect", params: {}});
+    this.$router.push({ name: this.$route.params.next ||  "TaskSelect", params: {}});
   }
 }
 </script>
@@ -31,7 +31,7 @@ export default class TaskInventory extends Vue {
 .success_wrap {
   justify-content: center;
   align-items: center;
-  widows: 100%;
+  width: 100%;
   height: 100%;
   .success_btn {
     width: 255px;

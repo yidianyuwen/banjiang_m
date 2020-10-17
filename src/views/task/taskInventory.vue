@@ -44,7 +44,7 @@ export default class TaskInventory extends Vue {
 
   submit() {
     console.log('submit');
-    this.$router.push({ name: "CustomSuccess", params: { status: '盘点成功',  }});
+    this.$router.push({ name: "CustomSuccess", params: { status: '盘点成功', next: 'TaskSelect'  }});
   }
 
 }

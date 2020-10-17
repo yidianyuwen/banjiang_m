@@ -40,7 +40,7 @@ const routes: Array<RouteConfig> = [
     component: () =>
       import(/* webpackChunkName: "task" */ "../views/task/historyRecord.vue")
   },
-  { // 历史记录
+  { // 整改方案
     path: "/rectificationProgram",
     name: "RectificationProgram",
     component: () =>

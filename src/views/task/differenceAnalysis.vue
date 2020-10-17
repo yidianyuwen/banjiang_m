@@ -87,8 +87,8 @@ export default class DifferenceAnalysis extends Vue {
     width: 100%;
     height: 60px;
     position: absolute;
-    padding: 10px 60px;
-    bottom: 25px;
+    padding: 10px 90px;
+    bottom: 0;
     background-color: $white;
   }
 }

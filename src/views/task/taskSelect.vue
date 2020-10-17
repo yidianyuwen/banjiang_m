@@ -2,10 +2,10 @@
   <div class="task_select_wrap flex_column">
     <div class="task_inventory_wrap flex_column" style="padding-top: 120px">
       <span class="task_histoy" @click="toHistory">历史记录（最近10次）</span>
-      <span class="task_inventory" @click="taskInventoryDialogVisible = true">任务盘点</span>
+      <span class="custom_shadow bg_orange text_white task_inventory" @click="taskInventoryDialogVisible = true">任务盘点</span>
     </div>
     <div style="padding-bottom: 160px">
-      <span class="difference_analysis" @click="toDifference">差异分析</span>
+      <span class="custom_shadow bg_orange text_white difference_analysis" @click="toDifference">差异分析</span>
     </div>
 
     <el-dialog title="盘点期别" :visible.sync="taskInventoryDialogVisible" width="85%" center>
@@ -67,7 +67,6 @@ export default class TaskSelect extends Vue {
   .difference_analysis {
     display: block;
     text-align: center;
-    background-color: red;
     margin: 0 70px;
     padding: 20px 0;
   }
@@ -78,7 +77,8 @@ export default class TaskSelect extends Vue {
 
   .task_histoy {
     align-self: flex-end;
-    border: 1px solid $primary;
+    border: 1px solid $line_gray;
+    border-radius: 4px;
     padding: 10px 25px;
     margin-bottom: 30px;
   }
