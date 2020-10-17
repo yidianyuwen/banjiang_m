@@ -5,10 +5,12 @@
  */
 
 $white: #ffffff;
+$black: #000000;
 $primary: #1A67F5;
 $btn_primary: #FF4A3D;
 $text_tip: #DE3C3C;
 $line_gray: #bbbbbb;
+$green: #48DE6F;
 
 $fz10:0.65rem;
 $fz12:0.75rem;
@@ -54,12 +56,18 @@ $mobile_width:414px;
 .text_white {
   color: $white;
 }
+.text_black {
+  color: $black;
+}
 .text_tip {
   color: $text_tip;
 }
 
 .bg_orange {
   background-color: $btn_primary;
+}
+.bg_green {
+  background-color: $green;
 }
 
 .mb5 {

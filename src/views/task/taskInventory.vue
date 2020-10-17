@@ -44,7 +44,7 @@ export default class TaskInventory extends Vue {
 
   submit() {
     console.log('submit');
-    this.$router.push({ path: "/customSuccess" });
+    this.$router.push({ name: "CustomSuccess", params: { status: '盘点成功',  }});
   }
 
 }
@@ -67,9 +67,11 @@ export default class TaskInventory extends Vue {
   justify-content: center;
   width: 100%;
   height: 60px;
-  border-top: 1px solid #ccc;
+  /*border-top: 1px solid #ccc;*/
   position: absolute;
+  padding-top: 10px;
   bottom: 0;
+  background-color: $white;
 
   .task_count {
     border: 1px solid $line_gray;

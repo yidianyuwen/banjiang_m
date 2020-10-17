@@ -20,7 +20,7 @@
  */
 
 import { Component, Vue, Prop, Watch } from "vue-property-decorator";
-import { getHistoryRecord } from "@/api/history_record.ts";
+import { getHistoryRecord } from "@/api/historyRecord.ts";
 
 @Component({
   name: "historyRecord",
@@ -37,39 +37,25 @@ export default class HistoryRecord extends Vue {
     const posData = {
       id: 1
     };
-    getHistoryRecord(posData).then((res: any) => {
-      console.log("res", res);
-      this.historyRecordData = [
-        {
-          date: "2016-05-02",
-          period: "半月盘"
-        },
-        {
-          date: "2016-05-02",
-          period: "周盘"
-        },
-        {
-          date: "2016-05-02",
-          period: "日盘"
-        }
-      ];
-    }).catch((err: any) => {
-      console.log('err', err);
-      this.historyRecordData = [
-        {
-          date: "2016-05-02",
-          period: "半月盘"
-        },
-        {
-          date: "2016-05-02",
-          period: "周盘"
-        },
-        {
-          date: "2016-05-02",
-          period: "日盘"
-        }
-      ];
-    });
+    this.historyRecordData = [
+      {
+        date: "2016-05-02",
+        period: "半月盘"
+      },
+      {
+        date: "2016-05-02",
+        period: "周盘"
+      },
+      {
+        date: "2016-05-02",
+        period: "日盘"
+      }
+    ];
+    // getHistoryRecord(posData).then((res: any) => {
+    //   console.log("res", res);
+    // }).catch((err: any) => {
+    //   console.log('err', err);
+    // });
   }
 
   toDetail(row: any) {

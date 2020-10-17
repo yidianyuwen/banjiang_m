@@ -5,7 +5,7 @@
       <span class="task_inventory" @click="taskInventoryDialogVisible = true">任务盘点</span>
     </div>
     <div style="padding-bottom: 160px">
-      <span class="difference_analysis">差异分析</span>
+      <span class="difference_analysis" @click="toDifference">差异分析</span>
     </div>
 
     <el-dialog title="盘点期别" :visible.sync="taskInventoryDialogVisible" width="85%" center>
@@ -41,12 +41,17 @@ export default class TaskSelect extends Vue {
   // mounted() {}
 
   toHistory() {
-    this.$router.push({ path: "/historyRecord" });
+    this.$router.push({ name: "HistoryRecord", params: {} });
   }
+
   toTaskInventory(index: number) {
     console.log("index ==>", index);
     this.taskInventoryDialogVisible = false;
-    this.$router.push({ path: "/taskInventory" });
+    this.$router.push({ name: "TaskInventory", params: {} });
+  }
+
+  toDifference() {
+    this.$router.push({ name: "DifferenceAnalysis", params: {}});
   }
 
 }

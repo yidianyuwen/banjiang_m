@@ -1,6 +1,6 @@
 <template>
-  <div class="flex_column success_wrap">
-    <span class="custom_btn custom_shadow bg_green text_black success_btn fz20" @click="confirm()">{{ status || "盘点成功" }}</span>
+  <div class="flex_column rectification_wrap">
+    整改方案
   </div>
 </template>
 
@@ -13,11 +13,11 @@
 import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 
 @Component({
-  name: "customSuccess",
+  name: "rectificationProgram",
   components: {}
 })
-export default class TaskInventory extends Vue {
-  private status = this.$route.params.status;
+export default class RectificationProgram extends Vue {
+  private status = '';
   // mounted() {}
 
   confirm() {
@@ -28,16 +28,11 @@ export default class TaskInventory extends Vue {
 </script>
 
 <style scoped lang="scss">
-.success_wrap {
+.rectification_wrap {
   justify-content: center;
   align-items: center;
   widows: 100%;
   height: 100%;
-  .success_btn {
-    width: 255px;
-    height: 255px;
-    line-height: 230px;
-    border-radius: 255px;
-  }
+
 }
 </style>

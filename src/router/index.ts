@@ -28,11 +28,23 @@ const routes: Array<RouteConfig> = [
     component: () =>
       import(/* webpackChunkName: "task" */ "../views/task/taskInventory.vue")
   },
+  {  // 差异分析
+    path: "/differenceAnalysis",
+    name: "DifferenceAnalysis",
+    component: () =>
+      import(/* webpackChunkName: "task" */ "../views/task/differenceAnalysis.vue")
+  },
   { // 历史记录
     path: "/historyRecord",
     name: "HistoryRecord",
     component: () =>
       import(/* webpackChunkName: "task" */ "../views/task/historyRecord.vue")
+  },
+  { // 历史记录
+    path: "/rectificationProgram",
+    name: "RectificationProgram",
+    component: () =>
+      import(/* webpackChunkName: "task" */ "../views/task/rectificationProgram.vue")
   },
   { // 成功提示页
     path: "/customSuccess",
