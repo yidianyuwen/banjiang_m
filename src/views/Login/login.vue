@@ -19,6 +19,7 @@
  */
 
 import { Component, Vue, Prop, Watch } from "vue-property-decorator";
+import {login} from "@/api/login";
 
 @Component({
   name: "Login",
@@ -37,7 +38,12 @@ export default class Login extends Vue {
       password: this.passWord
     };
     console.log("login", postData);
-    this.$router.push({ path: "/taskSelect" });
+    login(postData).then((res: any) => {
+      console.log('loginres =>', res);
+      this.$router.push({ path: "/taskSelect" });
+    }).catch((err: any) => {
+      console.log('loginerr =>', err);
+    });
   }
 
   // @Watch("")

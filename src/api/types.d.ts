@@ -4,6 +4,11 @@
  * Last Modify:
  */
 
+export interface login {
+  account?: any,
+  password?: any,
+}
+
 export interface history_record {
   id?: any,
 }
