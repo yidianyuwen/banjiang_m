@@ -1,7 +1,10 @@
 <template>
   <div class="container">
     <div class="flex_column task_inventory_wrap">
-      <el-date-picker v-model="inventoryData" type="date" placeholder="选择日期" value-format="yyyyMMdd"></el-date-picker>
+      <div class="justify_end" style="display: flex; padding: 15px">
+        <el-date-picker v-if="from === 'history'" v-model="inventoryData" type="date" placeholder="选择日期" value-format="yyyyMMdd"></el-date-picker>
+        <span v-else class="custom_btn custom_shadow bg_orange text_white" style="width: 70px;" @click="back()">返回</span>
+      </div>
 
       <Product @productData="getProductData" @countChange="countChange" />
 
@@ -13,14 +16,14 @@
 
     </div>
     <div class="flex_row aline_center option_group">
-      <span class="fz12 flex_full text_center task_count">盘点总金额：{{ '***' }}元</span>
+      <span class="fz12 flex_full text_center task_count">盘点总金额：{{ countAmount }}元</span>
 
       <span class="flex_column flex_full">
         <span class="fz14 text_center">未盘点： {{ unCount }}项</span>
         <span class="fz14 text_center">已盘点： {{ counted }}项</span>
       </span>
 
-      <span class="custom_btn custom_shadow bg_orange text_white flex_full" style="margin: 0 5px" @click="submit()">提交</span>
+      <span class="custom_btn custom_shadow bg_orange text_white flex_full" style="margin: 0 5px" @click="submit()">{{ from === 'history'?'提交':'修改'}}</span>
     </div>
   </div>
 </template>
@@ -44,10 +47,16 @@ import Product from "./compontent/product.vue";
 })
 export default class TaskInventory extends Vue {
   private userInfo = JSON.parse(sessionStorage.getItem("userInfo") as string);
+  private from = this.$route.params.from;
   private inventoryData = "";
   private productCount = [];
   private counted = 0;
   private unCount = 0;
+  private countAmount = 0;
+
+  back() {
+    this.$router.go(-1);
+  }
 
   /* 子组件传回数据 */
   getProductData(data: any) {
@@ -58,9 +67,11 @@ export default class TaskInventory extends Vue {
     this.productCount = data;
 
     this.counted = 0;
+    this.countAmount = 0;
     data.map((item: any) => {
       if (item.num1First || item.num1Two || item.num2First || item.num2Two || item.num3First || item.num3Two) {
         this.counted = this.counted + 1;
+        this.countAmount = this.countAmount + item.countAmount;
       }
     });
     this.unCount = data.length - this.counted;
@@ -69,12 +80,18 @@ export default class TaskInventory extends Vue {
   /* 提交录入 */
   submit() {
     const postData = {
-      checkFoodDate: this.inventoryData,
+      checkFoodDate: "",
       inventoryFoodsReqList: this.productCount,
       inventoryTotalAmt: "",
       shopId: this.userInfo.shopId,
       shopName: this.userInfo.shopName
     };
+    if (this.from === "history") {
+      postData.checkFoodDate = (this.$route.params.info as any).date;
+    } else {
+      postData.checkFoodDate = this.inventoryData;
+    }
+
     inventoryRecord(postData).then((res: any) => {
       console.log('getProductData =>', res.data);
       this.$router.push({ name: "CustomSuccess", params: { status: '盘点成功', next: 'TaskSelect'  }});

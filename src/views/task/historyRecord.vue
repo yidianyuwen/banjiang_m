@@ -60,7 +60,7 @@ export default class HistoryRecord extends Vue {
 
   toDetail(row: any) {
     console.log("row", row);
-    this.$router.push({ path: "/taskInventory" });
+    this.$router.push({ name: "TaskInventory", params: { info: row, from: 'select' } });
   }
 }
 </script>

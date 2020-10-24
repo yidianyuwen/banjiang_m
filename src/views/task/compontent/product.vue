@@ -18,7 +18,7 @@
         <span class="flex_row mb10">
           <el-input class="price_input mr10" v-model="item.num2First" @change="countChange(item)" clearable placeholder="盘点数量" />
           <el-input class="price_input" v-model="item.num2Two" @change="countChange(item)" clearable placeholder="盘点数量" />
-          <span class="price_unit">{{ item.unit12 }}({{ item.unit2Coefficient }}克)</span>
+          <span class="price_unit">{{ item.unit2 }}({{ item.unit2Coefficient }}克)</span>
         </span>
         <span class="flex_row mb10">
           <el-input class="price_input mr10" v-model="item.num3First" @change="countChange(item)" clearable placeholder="盘点数量" />
@@ -28,7 +28,7 @@
 
         <span class="flex_row" style="justify-content: space-between">
           <span class="price_count fz12">盘点数量：{{ countN(item) }}克</span>
-          <span class="price_count fz12">盘点金额：{{ countM(item) }}元</span>
+          <span class="price_count fz12">盘点金额：{{ countM(item, index) }}元</span>
         </span>
       </div>
     </div>
@@ -45,6 +45,7 @@
 import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 import { getProductData } from "@/api/taskInventory";
 import { countNum, countMony } from "@/utils/utils";
+import index from "@/store";
 
 
 @Component({
@@ -67,19 +68,40 @@ export default class Product extends Vue {
     }).catch((err: any) => {
       console.log('getProductDataerr =>', err);
     });
+    // this.productData = [{
+    //   unit1: '2',
+    //   unit2: '2',
+    //   unit3: '2',
+    //   unit1Coefficient: 10,
+    //   unit2Coefficient: 10,
+    //   unit3Coefficient: 10,
+    //   minOperateUnitPrice: 10,
+    // },{
+    //   unit1: '2',
+    //   unit2: '2',
+    //   unit3: '2',
+    //   unit1Coefficient: 10,
+    //   unit2Coefficient: 10,
+    //   unit3Coefficient: 10,
+    //   minOperateUnitPrice: 10,
+    // }];
+    // this.$emit("productData", this.productData)
   }
 
   countChange(item: any) {
-    this.$emit("countChange", this.productData)
+    this.$emit("countChange", this.productData);
   }
 
   countN(item: any) {
     return countNum(item);
   }
-  countM(item: any) {
+  countM(item: any, index: any) {
+    const countAmount = {
+      countAmount: countMony(item)
+    };
+    Object.assign(this.productData[index], countAmount);
     return countMony(item);
   }
-
 }
 </script>
 

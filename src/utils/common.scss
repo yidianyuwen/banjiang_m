@@ -103,13 +103,21 @@ $mobile_width:414px;
 .flex_full {
   flex: 1;
 }
+.justify_end {
+  justify-content: flex-end;
+}
 .aline_center {
   align-items: center;
+}
+.aline_end {
+  align-items: flex-end;
+}
+.aline_self_end {
+  align-self: flex-end;
 }
 .text_center {
   text-align: center;
 }
-
 
 .el-main {
   padding: 0 !important;
