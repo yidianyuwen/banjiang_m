@@ -18,7 +18,7 @@
     <div class="flex_row aline_center option_group">
       <span class="fz12 flex_full text_center task_count">盘点总金额：{{ countAmount }}元</span>
 
-      <span class="flex_column flex_full">
+      <span class="flex_column flex_full" v-if="!this.$route.params.info">
         <span class="fz14 text_center">未盘点： {{ unCount }}项</span>
         <span class="fz14 text_center">已盘点： {{ counted }}项</span>
       </span>
@@ -66,6 +66,7 @@ export default class TaskInventory extends Vue {
   /* 子组件传回数据 */
   getProductData(data: any) {
     this.unCount = data.length;
+    this.countAmount = data[0].inventoryTotalAmt;
   }
   countChange(data: any) {
     console.log('getMsgFormSon => ',data);

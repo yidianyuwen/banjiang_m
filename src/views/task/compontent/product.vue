@@ -56,20 +56,26 @@ import index from "@/store";
 export default class Product extends Vue {
   private userInfo = JSON.parse(sessionStorage.getItem("userInfo") as string);
   @Prop() info?: any;
-  private productData = [];
+  private productData: any = [];
   mounted() {
     this.getTaskInfo()
   }
 
   getTaskInfo() {
-    const postData = {
-      checkFoodDate: formateData(this.info.checkFoodDate),
-      shopId: this.userInfo.shopId,
-      shopName: this.userInfo.shopName
-    };
-    if (this.info && this.info.checkFoodDate) {
+    if (this.info) {
+      const postData = {
+        checkFoodDate: formateData(this.info.checkFoodDate),
+        shopId: this.userInfo.shopId,
+        shopName: this.userInfo.shopName
+      };
       getHistoryRecord(postData).then((res: any) => {
         this.productData = res.data.checkFoodsResList;
+
+        this.productData = [];
+        res.data.checkFoodsResList.map((data: any) => {
+          this.productData = [...data.inventoryFoodsSingleReqList]
+        })
+
         this.$emit("productData", this.productData)
       }).catch((err: any) => {});
     } else {
