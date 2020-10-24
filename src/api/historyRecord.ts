@@ -8,8 +8,8 @@ import request from '@/utils/request'
 import TYPES from './types'
 
 /**
- * 历史记录
+ * 查询盘点记录列表
  * @param params
  */
 export const getHistoryRecord = (params: TYPES.history_record) =>
-  request.post('', params);
+  request.post('/banjiang/inventory/queryCheckData', params);

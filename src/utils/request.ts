@@ -26,7 +26,8 @@ service.interceptors.request.use(
 
     config.data = {body: config.data, common: {
         terminalType: "H5",
-        clientDateTime: getNowFormatDate('') + random(),  // 当前时间拼八位随机数
+        clientDateTime: new Date(),  // 当前时间拼八位随机数
+        requestSerialNo: getNowFormatDate('') + random(),  // 当前时间拼八位随机数
       }};
     return config
   },

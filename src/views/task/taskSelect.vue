@@ -47,7 +47,7 @@ export default class TaskSelect extends Vue {
   toTaskInventory(index: number) {
     console.log("index ==>", index);
     this.taskInventoryDialogVisible = false;
-    this.$router.push({ name: "TaskInventory", params: { from: "history" } });
+    this.$router.push({ name: "TaskInventory", params: { from: "select" } });
   }
 
   toDifference() {

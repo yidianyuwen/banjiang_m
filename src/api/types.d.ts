@@ -10,7 +10,10 @@ export interface login {
 }
 
 export interface history_record {
-  id?: any,
+  pageNo?: any,
+  pageSize?: any,
+  shopId?: any,
+  shopName?: any,
 }
 
 export interface product_data {

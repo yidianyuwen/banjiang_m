@@ -4,6 +4,8 @@
  * Last Modify:
  */
 
+var reg = new RegExp("年","g");
+
 /**
  * 当前时间
  * @param param
@@ -67,4 +69,12 @@ export const countMony = (param: any) => {
   let num3Two = (parseInt(param.num3Two || 0) * param.unit3Coefficient) * param.minOperateUnitPrice;;
 
   return unitMony = num1First + num1Two + num2First + num2Two + num3First + num3Two;
+};
+
+/**
+ * 年月日时间格式化
+ * @param param
+ */
+export const formateData = (param: any) => {
+  return param.replace(/年/g,'').replace(/月/, '').replace(/日/, '');
 };

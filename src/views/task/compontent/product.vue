@@ -44,7 +44,8 @@
 
 import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 import { getProductData } from "@/api/taskInventory";
-import { countNum, countMony } from "@/utils/utils";
+import { getHistoryRecord } from "@/api/historyRecord";
+import { countNum, countMony, formateData } from "@/utils/utils";
 import index from "@/store";
 
 
@@ -53,6 +54,8 @@ import index from "@/store";
   components: {},
 })
 export default class Product extends Vue {
+  private userInfo = JSON.parse(sessionStorage.getItem("userInfo") as string);
+  @Prop() info?: any;
   private productData = [];
   mounted() {
     this.getTaskInfo()
@@ -60,14 +63,21 @@ export default class Product extends Vue {
 
   getTaskInfo() {
     const postData = {
+      checkFoodDate: formateData(this.info.checkFoodDate),
+      shopId: this.userInfo.shopId,
+      shopName: this.userInfo.shopName
     };
-    getProductData(postData).then((res: any) => {
-      console.log('getProductData =>', res.data);
-      this.productData = res.data;
-      this.$emit("productData", this.productData)
-    }).catch((err: any) => {
-      console.log('getProductDataerr =>', err);
-    });
+    if (this.info && this.info.checkFoodDate) {
+      getHistoryRecord(postData).then((res: any) => {
+        this.productData = res.data.checkFoodsResList;
+        this.$emit("productData", this.productData)
+      }).catch((err: any) => {});
+    } else {
+      getProductData({}).then((res: any) => {
+        this.productData = res.data;
+        this.$emit("productData", this.productData)
+      }).catch((err: any) => {});
+    }
     // this.productData = [{
     //   unit1: '2',
     //   unit2: '2',
