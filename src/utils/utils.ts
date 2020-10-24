@@ -23,7 +23,37 @@ export const getNowFormatDate = (param: any) => {
   if (strDate >= 0 && strDate <= 9) {
     strDate = '0' + strDate;
   }
-  var currentdate = year + seperator1 + month + seperator1 + strDate;
   // var currentdate = year + seperator1 + month + seperator1 + strDate + ' ' + hours + ':' + minutes + ':' + seconds;
-  return currentdate;
-}
+  return year + seperator1 + month + seperator1 + strDate;
+};
+
+/**
+ * 盘点数量
+ * @param param
+ */
+export const countNum = (param: any) => {
+  let unitNum = 0;
+
+  let num1 = ((parseInt(param.num1First || 0)) * param.unit1Coefficient + parseInt(param.num1Two || 0) * param.unit1Coefficient) ;
+  let num2 = (parseInt(param.num2First || 0) * param.unit2Coefficient + parseInt(param.num2Two || 0) * param.unit2Coefficient) ;
+  let num3 = (parseInt(param.num3First || 0) * param.unit3Coefficient + parseInt(param.num3Two || 0) * param.unit3Coefficient) ;
+
+  return unitNum = num1 + num2 + num3;
+};
+
+/**
+ * 盘点金额
+ * @param param
+ */
+export const countMony = (param: any) => {
+  let unitMony = 0;
+
+  let num1First = (parseInt(param.num1First || 0) * param.unit1Coefficient) * param.minOperateUnitPrice;
+  let num1Two = (parseInt(param.num1Two || 0) * param.unit1Coefficient) * param.minOperateUnitPrice;
+  let num2First = (parseInt(param.num2First || 0) * param.unit2Coefficient) * param.minOperateUnitPrice;
+  let num2Two = (parseInt(param.num2Two || 0) * param.unit2Coefficient) * param.minOperateUnitPrice;
+  let num3First = (parseInt(param.num3First || 0) * param.unit3Coefficient) * param.minOperateUnitPrice;
+  let num3Two = (parseInt(param.num3Two || 0) * param.unit3Coefficient) * param.minOperateUnitPrice;;
+
+  return unitMony = num1First + num1Two + num2First + num2Two + num3First + num3Two;
+};

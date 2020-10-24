@@ -3,29 +3,32 @@
     <div class="product_wrap flex_row" v-for="(item, index) in productData" :key="index">
       <div class="flex_column product_info">
         <span class="flex_column product_info" style="min-height: 120px">
-          <span>{{ item.number }}</span>
-          <span>{{ item.name }}</span>
+          <span>{{ item.spNo }}</span>
+          <span>{{ item.spName }}</span>
         </span>
         <span>规格</span>
       </div>
 
       <div class="flex_column price_wrap">
         <span class="flex_row mb10">
-          <el-input class="price_input" v-model="item.listPrice.priceOne" clearable placeholder="盘点数量" />
-          <span class="price_unit">{{ item.listPrice.unitOne }}</span>
+          <el-input class="price_input mr10" v-model="item.num1First" @change="countChange(item)" clearable placeholder="盘点数量" />
+          <el-input class="price_input" v-model="item.num1Two" @change="countChange(item)" clearable placeholder="盘点数量" />
+          <span class="price_unit">{{ item.unit1 }}({{ item.unit1Coefficient }}克)</span>
         </span>
         <span class="flex_row mb10">
-          <el-input class="price_input" v-model="item.listPrice.priceTwo" clearable placeholder="盘点数量" />
-          <span class="price_unit">{{ item.listPrice.unitTwo }}</span>
+          <el-input class="price_input mr10" v-model="item.num2First" @change="countChange(item)" clearable placeholder="盘点数量" />
+          <el-input class="price_input" v-model="item.num2Two" @change="countChange(item)" clearable placeholder="盘点数量" />
+          <span class="price_unit">{{ item.unit12 }}({{ item.unit2Coefficient }}克)</span>
         </span>
         <span class="flex_row mb10">
-          <el-input class="price_input" v-model="item.listPrice.priceThree" clearable placeholder="盘点数量" />
-          <span class="price_unit">{{ item.listPrice.unitThree }}</span>
+          <el-input class="price_input mr10" v-model="item.num3First" @change="countChange(item)" clearable placeholder="盘点数量" />
+          <el-input class="price_input" v-model="item.num3Two" @change="countChange(item)" clearable placeholder="盘点数量" />
+          <span class="price_unit">{{ item.unit3 }}({{ item.unit3Coefficient }}克)</span>
         </span>
 
         <span class="flex_row" style="justify-content: space-between">
-          <span class="price_count fz12">盘点数量：{{ item.unitNum }}千克</span>
-          <span class="price_count fz12">盘点金额：{{ item.unitPirce }}元</span>
+          <span class="price_count fz12">盘点数量：{{ countN(item) }}克</span>
+          <span class="price_count fz12">盘点金额：{{ countM(item) }}元</span>
         </span>
       </div>
     </div>
@@ -40,44 +43,54 @@
  */
 
 import { Component, Vue, Prop, Watch } from "vue-property-decorator";
+import { getProductData } from "@/api/taskInventory";
+import { countNum, countMony } from "@/utils/utils";
+
 
 @Component({
   name: "Product",
-  components: {}
+  components: {},
+  filters: {
+    numFilter(value: any) {
+      let realVal = "";
+      if (!isNaN(value) && value !== "") {
+        // 截取当前数据到小数点后两位
+        realVal = parseFloat(value).toFixed(2);
+      } else {
+        realVal = "--";
+      }
+      return realVal;
+    }
+  }
 })
 export default class Product extends Vue {
-  // @Prop() productData!: any;
-  private productData = [
-    {
-      number: "001",
-      name: "商品一",
-      listPrice: {
-        priceOne: 100,
-        unitOne: "单位一",
-        priceTwo: "",
-        unitTwo: "单位二",
-        priceThree: "",
-        unitThree: "单位三",
-      },
-      unitNum: "****",
-      unitPirce: "****"
-    },
-    {
-      number: "002",
-      name: "商品二",
-      listPrice: {
-        priceOne: 100,
-        unitOne: "单位一",
-        priceTwo: "",
-        unitTwo: "单位二",
-        priceThree: "",
-        unitThree: "单位三",
-      },
-      unitNum: "****",
-      unitPirce: "****"
-    }
-  ];
-  // mounted() {}
+  private productData = [];
+  mounted() {
+    this.getTaskInfo()
+  }
+
+  getTaskInfo() {
+    const postData = {
+    };
+    getProductData(postData).then((res: any) => {
+      console.log('getProductData =>', res.data);
+      this.productData = res.data;
+    }).catch((err: any) => {
+      console.log('getProductDataerr =>', err);
+    });
+  }
+
+  countChange(item: any) {
+    this.$emit("countChange", this.productData)
+  }
+
+  countN(item: any) {
+    return countNum(item);
+  }
+  countM(item: any) {
+    return countMony(item);
+  }
+
 }
 </script>
 
@@ -100,7 +113,8 @@ export default class Product extends Vue {
   line-height: 40px;
 
   .price_input {
-    flex: 2;
+    /*flex: 2;*/
+    width: 30%;
   }
   .price_unit {
     flex: 1;

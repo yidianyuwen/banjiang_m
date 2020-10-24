@@ -34,12 +34,14 @@ export default class Login extends Vue {
 
   _login() {
     const postData = {
-      accont: this.accont,
-      password: this.passWord
+      custNo: this.accont,
+      custPwd: this.passWord
     };
     console.log("login", postData);
     login(postData).then((res: any) => {
       console.log('loginres =>', res);
+      // this.$store.dispatch('userInfo', res.data);
+      sessionStorage.setItem("userInfo", JSON.stringify(res.data));
       this.$router.push({ path: "/taskSelect" });
     }).catch((err: any) => {
       console.log('loginerr =>', err);

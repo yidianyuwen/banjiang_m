@@ -29,6 +29,7 @@ import { getDifferent } from "@/api/differenceAnalysis.ts";
   components: {}
 })
 export default class DifferenceAnalysis extends Vue {
+  private userInfo = JSON.parse(sessionStorage.getItem("userInfo") as string);
   private differenceRate = '7.00';
   private differenceData: any = [];
 
@@ -38,7 +39,12 @@ export default class DifferenceAnalysis extends Vue {
 
   getDifferent() {
     const posData = {
-      id: 1
+      startDate: "",
+      endDate: "",
+      shopId: this.userInfo.shopId,
+      shopName: this.userInfo.shopName,
+      spName: this.userInfo.spName,
+      spNo: this.userInfo.spNo
     };
     this.differenceData = [
       {
@@ -57,11 +63,11 @@ export default class DifferenceAnalysis extends Vue {
         differenceAmount: ''
       }
     ];
-    // getDifferent(posData).then((res: any) => {
-    //   console.log("res", res);
-    // }).catch((err: any) => {
-    //   console.log('err', err);
-    // });
+    getDifferent(posData).then((res: any) => {
+      console.log("res", res);
+    }).catch((err: any) => {
+      console.log('err', err);
+    });
   }
 
   submit() {

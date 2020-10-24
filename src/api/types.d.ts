@@ -5,8 +5,8 @@
  */
 
 export interface login {
-  account?: any,
-  password?: any,
+  custNo?: any,
+  custPwd?: any,
 }
 
 export interface history_record {
@@ -17,6 +17,19 @@ export interface product_data {
   id?: any,
 }
 
+export interface inventory_record {
+  checkFoodDate?: any,
+  inventoryFoodsReqList?: any,
+  inventoryTotalAmt?: any,
+  shopId?: any,
+  shopName?: any,
+}
+
 export interface different {
-  id?: any,
+  startDate?: any,
+  endDate?: any,
+  shopId?: any,
+  shopName?: any,
+  spName?: any,
+  spNo?: any,
 }

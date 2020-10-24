@@ -8,8 +8,8 @@ import request from '@/utils/request'
 import TYPES from './types'
 
 /**
- * 差异分析
+ * 差异率计算
  * @param params
  */
 export const getDifferent = (params: TYPES.different) =>
-  request.post('', params);
+  request.post('/banjiang/inventory/calculateSpRate', params);

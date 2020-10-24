@@ -18,11 +18,15 @@ service.interceptors.request.use(
   (config) => {
 
     config.headers['Content-Type'] = 'application/json';
-    config.headers['Accept'] = 'application/json';
-    config.headers['version'] = '1.0';
-    config.headers['timestamp'] = new Date().getTime().toString();
+    // config.headers['Accept'] = 'application/json';
+    // config.headers['version'] = '1.0';
+    config.headers['terminalType'] = 'H5';
+    // config.headers['timestamp'] = new Date().getTime().toString();
 
-    config.data = {dataStr: config.data};
+    config.data = {body: config.data, common: {
+        terminalType: "H5",
+        clientDateTime: new Date(),
+      }};
     return config
   },
   (error) => {
@@ -43,6 +47,7 @@ service.interceptors.response.use(
     // code == 50005: username or password is incorrect
     // You can change this part for your own usage.
     // alert(JSON.stringify(response.data))
+    console.log('response.data', response.data)
     const decodeData = response.data;
 
     if (response.status !== 200) {
@@ -67,7 +72,7 @@ service.interceptors.response.use(
         })
         return Promise.reject(new Error(decodeData.result.common.retMsg || 'Error'))
       } else {
-        return decodeData
+        return decodeData.result
       }
     }
   },
