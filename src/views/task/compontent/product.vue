@@ -50,18 +50,6 @@ import { countNum, countMony } from "@/utils/utils";
 @Component({
   name: "Product",
   components: {},
-  filters: {
-    numFilter(value: any) {
-      let realVal = "";
-      if (!isNaN(value) && value !== "") {
-        // 截取当前数据到小数点后两位
-        realVal = parseFloat(value).toFixed(2);
-      } else {
-        realVal = "--";
-      }
-      return realVal;
-    }
-  }
 })
 export default class Product extends Vue {
   private productData = [];
@@ -75,6 +63,7 @@ export default class Product extends Vue {
     getProductData(postData).then((res: any) => {
       console.log('getProductData =>', res.data);
       this.productData = res.data;
+      this.$emit("productData", this.productData)
     }).catch((err: any) => {
       console.log('getProductDataerr =>', err);
     });

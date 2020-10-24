@@ -4,8 +4,9 @@
  * Last Modify:
  */
 
-import axios from "axios"
-import { Message, MessageBox } from 'element-ui'
+import axios from "axios";
+import { Message, MessageBox } from 'element-ui';
+import { getNowFormatDate,random } from "@/utils/utils";
 
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
@@ -25,7 +26,7 @@ service.interceptors.request.use(
 
     config.data = {body: config.data, common: {
         terminalType: "H5",
-        clientDateTime: new Date(),
+        clientDateTime: getNowFormatDate('') + random(),  // 当前时间拼八位随机数
       }};
     return config
   },

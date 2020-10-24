@@ -3,7 +3,7 @@
     <div class="flex_column task_inventory_wrap">
       <el-date-picker v-model="inventoryData" type="date" placeholder="选择日期" value-format="yyyyMMdd"></el-date-picker>
 
-      <Product :productData="productData" @countChange="countChange" />
+      <Product @productData="getProductData" @countChange="countChange" />
 
       <div class="flex_column tips">
         <span class="text_tip mb5">不能出现三个都未空的，需要填入0</span>
@@ -16,8 +16,8 @@
       <span class="fz12 flex_full text_center task_count">盘点总金额：{{ '***' }}元</span>
 
       <span class="flex_column flex_full">
-        <span class="fz14 text_center">未盘点： **项</span>
-        <span class="fz14 text_center">已盘点： {{ Counted }}项</span>
+        <span class="fz14 text_center">未盘点： {{ unCount }}项</span>
+        <span class="fz14 text_center">已盘点： {{ counted }}项</span>
       </span>
 
       <span class="custom_btn custom_shadow bg_orange text_white flex_full" style="margin: 0 5px" @click="submit()">提交</span>
@@ -45,21 +45,28 @@ import Product from "./compontent/product.vue";
 export default class TaskInventory extends Vue {
   private userInfo = JSON.parse(sessionStorage.getItem("userInfo") as string);
   private inventoryData = "";
-  private productData = [];
   private productCount = [];
-  private Counted = 0;
+  private counted = 0;
+  private unCount = 0;
 
+  /* 子组件传回数据 */
+  getProductData(data: any) {
+    this.unCount = data.length;
+  }
   countChange(data: any) {
     console.log('getMsgFormSon => ',data);
     this.productCount = data;
 
+    this.counted = 0;
     data.map((item: any) => {
       if (item.num1First || item.num1Two || item.num2First || item.num2Two || item.num3First || item.num3Two) {
-        this.Counted + 1;
+        this.counted = this.counted + 1;
       }
     });
+    this.unCount = data.length - this.counted;
   }
 
+  /* 提交录入 */
   submit() {
     const postData = {
       checkFoodDate: this.inventoryData,
@@ -70,9 +77,8 @@ export default class TaskInventory extends Vue {
     };
     inventoryRecord(postData).then((res: any) => {
       console.log('getProductData =>', res.data);
-    }).catch((err: any) => {
-      console.log('getProductDataerr =>', err);
-    });
+      this.$router.push({ name: "CustomSuccess", params: { status: '盘点成功', next: 'TaskSelect'  }});
+    }).catch((err: any) => {});
     this.$router.push({ name: "CustomSuccess", params: { status: '盘点成功', next: 'TaskSelect'  }});
   }
 

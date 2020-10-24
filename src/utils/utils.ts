@@ -10,7 +10,7 @@
  */
 export const getNowFormatDate = (param: any) => {
   var date = new Date();
-  var seperator1 = '-';
+  var seperator1 = param;
   var year = date.getFullYear();
   var month: any = date.getMonth() + 1;
   var strDate: any = date.getDate();
@@ -24,8 +24,19 @@ export const getNowFormatDate = (param: any) => {
     strDate = '0' + strDate;
   }
   // var currentdate = year + seperator1 + month + seperator1 + strDate + ' ' + hours + ':' + minutes + ':' + seconds;
-  return year + seperator1 + month + seperator1 + strDate;
+  return year + seperator1 + month + seperator1 + strDate + hours + minutes + seconds;
 };
+
+/**
+ * 随机生成八位数
+ */
+export const random = () => {
+  let randomNum;
+  do
+    randomNum = Math.floor(Math.random()*100000000);
+  while( randomNum < 10000000 )
+  return randomNum;
+}
 
 /**
  * 盘点数量
