@@ -61,12 +61,12 @@ export const countNum = (param: any) => {
 export const countMony = (param: any) => {
   let unitMony = 0;
 
-  let num1First = (parseInt(param.num1First || 0) * param.unit1Coefficient) * param.minOperateUnitPrice;
-  let num1Two = (parseInt(param.num1Two || 0) * param.unit1Coefficient) * param.minOperateUnitPrice;
-  let num2First = (parseInt(param.num2First || 0) * param.unit2Coefficient) * param.minOperateUnitPrice;
-  let num2Two = (parseInt(param.num2Two || 0) * param.unit2Coefficient) * param.minOperateUnitPrice;
-  let num3First = (parseInt(param.num3First || 0) * param.unit3Coefficient) * param.minOperateUnitPrice;
-  let num3Two = (parseInt(param.num3Two || 0) * param.unit3Coefficient) * param.minOperateUnitPrice;;
+  let num1First = (parseFloat(param.num1First || 0) * parseFloat(param.unit1Coefficient)) * parseFloat(param.minOperateUnitPrice);
+  let num1Two = (parseFloat(param.num1Two || 0) * parseFloat(param.unit1Coefficient)) * parseFloat(param.minOperateUnitPrice);
+  let num2First = (parseFloat(param.num2First || 0) * parseFloat(param.unit2Coefficient)) * parseFloat(param.minOperateUnitPrice);
+  let num2Two = (parseFloat(param.num2Two || 0) * parseFloat(param.unit2Coefficient)) * parseFloat(param.minOperateUnitPrice);
+  let num3First = (parseFloat(param.num3First || 0) * parseFloat(param.unit3Coefficient)) * parseFloat(param.minOperateUnitPrice);
+  let num3Two = (parseFloat(param.num3Two || 0) * parseFloat(param.unit3Coefficient)) * parseFloat(param.minOperateUnitPrice);
 
   return unitMony = num1First + num1Two + num2First + num2Two + num3First + num3Two;
 };
