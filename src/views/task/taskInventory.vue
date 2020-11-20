@@ -73,7 +73,7 @@ export default class TaskInventory extends Vue {
     this.countAmount = data[0].inventoryTotalAmt;
   }
   countChange(data: any) {
-    console.log('getMsgFormSon => ',data);
+    // console.log("getMsgFormSon =>",data);
     this.productCount = data;
 
     this.counted = 0;

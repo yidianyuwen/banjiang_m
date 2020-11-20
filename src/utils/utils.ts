@@ -38,7 +38,7 @@ export const random = () => {
     randomNum = Math.floor(Math.random()*100000000);
   while( randomNum < 10000000 )
   return randomNum;
-}
+};
 
 /**
  * 盘点数量

@@ -20,7 +20,7 @@
           <el-input class="price_input" v-model="item.num2Two" @change="countChange(item)" clearable placeholder="盘点数量" />
           <span class="price_unit">{{ item.unit2 }}({{ item.unit2Coefficient }}克)</span>
         </span>
-        <span class="flex_row mb10">
+        <span class="flex_row mb10" v-if="isEmptyUnit(item)">
           <el-input class="price_input mr10" v-model="item.num3First" @change="countChange(item)" clearable placeholder="盘点数量" />
           <el-input class="price_input" v-model="item.num3Two" @change="countChange(item)" clearable placeholder="盘点数量" />
           <span class="price_unit">{{ item.unit3 }}({{ item.unit3Coefficient }}克)</span>
@@ -74,15 +74,19 @@ export default class Product extends Vue {
         this.productData = [];
         res.data.checkFoodsResList.map((data: any) => {
           this.productData = [...data.inventoryFoodsSingleReqList]
-        })
+        });
 
         this.$emit("productData", this.productData)
-      }).catch((err: any) => {});
+      }).catch((err: any) => {
+        console.log("err =>", err)
+      });
     } else {
       getProductData({}).then((res: any) => {
         this.productData = res.data;
         this.$emit("productData", this.productData)
-      }).catch((err: any) => {});
+      }).catch((err: any) => {
+        console.log("err =>", err)
+      });
     }
     // this.productData = [{
     //   unit1: '2',
@@ -102,6 +106,13 @@ export default class Product extends Vue {
     //   minOperateUnitPrice: 10,
     // }];
     // this.$emit("productData", this.productData)
+  }
+
+  isEmptyUnit(param: any) {
+    return param.unit3Coefficient ? (
+      param.unit3Coefficient != "0" ||
+      param.unit3 != "×"
+    ) : false;
   }
 
   countChange(item: any) {
