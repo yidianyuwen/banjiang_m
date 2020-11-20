@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <Header headerTitle="整改方案" />
     <div class="flex_column rectification_wrap">
       <span class="rectification_tit fz28 fw_bold">整改方案提交</span>
 
@@ -20,9 +21,13 @@
  */
 import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 
+import Header from "@/compontent/Header/header.vue";
+
 @Component({
   name: "rectificationProgram",
-  components: {}
+  components: {
+    Header
+  }
 })
 export default class RectificationProgram extends Vue {
   private status = '';

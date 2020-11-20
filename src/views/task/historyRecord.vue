@@ -1,5 +1,7 @@
 <template>
   <div class="history_record_wrap flex_column">
+    <Header headerTitle="历史记录" />
+
     <el-table :data="historyRecordData" border style="width: 100%" :header-cell-style="{ 'background-color': '#fafafa' }">
       <el-table-column prop="checkFoodDate" label="盘点时间" align="center"></el-table-column>
       <el-table-column prop="checkFoodType" label="盘点期别" align="center"></el-table-column>
@@ -33,9 +35,13 @@
 import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 import { getHistoryRecord } from "@/api/historyRecord.ts";
 
+import Header from "@/compontent/Header/header.vue";
+
 @Component({
   name: "historyRecord",
-  components: {}
+  components: {
+    Header,
+  }
 })
 export default class HistoryRecord extends Vue {
   private userInfo = JSON.parse(sessionStorage.getItem("userInfo") as string);

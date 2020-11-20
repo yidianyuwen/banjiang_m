@@ -1,5 +1,7 @@
 <template>
   <div class="difference_wrap flex_column">
+    <Header headerTitle="差异分析" />
+
     <span class="difference_rate">本次差异率： {{ differenceRate }}%</span>
 
     <el-table :data="differenceData" border style="width: 100%" :header-cell-style="{ 'background-color': '#fafafa' }">
@@ -24,9 +26,13 @@
 import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 import { getDifferent } from "@/api/differenceAnalysis.ts";
 
+import Header from "@/compontent/Header/header.vue";
+
 @Component({
   name: "differenceAnalysis",
-  components: {}
+  components: {
+    Header,
+  }
 })
 export default class DifferenceAnalysis extends Vue {
   private userInfo = JSON.parse(sessionStorage.getItem("userInfo") as string);
@@ -85,6 +91,7 @@ export default class DifferenceAnalysis extends Vue {
   .difference_rate {
     display: block;
     padding: 20px 25px;
+    text-align: right;
   }
 
   .option_group {

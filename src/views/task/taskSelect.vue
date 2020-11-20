@@ -32,9 +32,13 @@
 
 import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 
+import Header from "@/compontent/Header/header.vue";
+
 @Component({
   name: "taskSelect",
-  components: {}
+  components: {
+    Header
+  }
 })
 export default class TaskSelect extends Vue {
   private taskInventoryDialogVisible = false;

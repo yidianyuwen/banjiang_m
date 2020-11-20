@@ -1,9 +1,11 @@
 <template>
   <div class="container">
     <div class="flex_column task_inventory_wrap">
+      <Header headerTitle="任务盘点" />
+
       <div class="justify_end" style="display: flex; padding: 15px">
-        <span v-if="from === 'history'" class="custom_btn custom_shadow bg_orange text_white" style="width: 70px;" @click="back()">返回</span>
-        <el-date-picker v-else v-model="inventoryData" type="date" placeholder="选择日期" value-format="yyyyMMdd"></el-date-picker>
+        <el-date-picker v-if="from !== 'history'" v-model="inventoryData" type="date" placeholder="选择日期" value-format="yyyyMMdd"></el-date-picker>
+        <!--<span v-else class="custom_btn custom_shadow bg_orange text_white" style="width: 70px;" @click="back()">返回</span>-->
       </div>
 
       <Product :info="this.$route.params.info" @productData="getProductData" @countChange="countChange" />
@@ -39,11 +41,13 @@ import { inventoryRecord } from "@/api/taskInventory";
 import { formateData } from "@/utils/utils";
 
 import Product from "./compontent/product.vue";
+import Header from "@/compontent/Header/header.vue";
 
 @Component({
   name: "taskInventory",
   components: {
-    Product
+    Product,
+    Header
   }
 })
 export default class TaskInventory extends Vue {
