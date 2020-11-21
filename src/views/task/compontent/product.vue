@@ -109,10 +109,7 @@ export default class Product extends Vue {
   }
 
   isEmptyUnit(param: any) {
-    return param.unit3Coefficient ? (
-      param.unit3Coefficient != "0" ||
-      param.unit3 != "×"
-    ) : false;
+    return param.unit3Coefficient ? ( param.unit3Coefficient != "" && param.unit3 != "" ) : false;
   }
 
   countChange(item: any) {
