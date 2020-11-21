@@ -1,37 +1,74 @@
 <template>
   <div>
-    <div class="product_wrap flex_row" v-for="(item, index) in productData" :key="index">
-      <div class="flex_column product_info">
-        <span class="flex_column product_info" style="min-height: 120px">
-          <span>{{ item.spNo }}</span>
-          <span>{{ item.spName }}</span>
-        </span>
-        <span>规格</span>
-      </div>
+    <el-form ref="ruleForm" class="flex_column price_wrap" :model="productData[0]" :rules="rules" label-width="0px">
+      <div class="product_wrap flex_row" v-for="(item, index) in productData" :key="index">
+        <div class="flex_column product_info">
+          <span class="flex_column product_info" style="min-height: 120px">
+            <span>{{ item.spNo }}</span>
+            <span>{{ item.spName }}</span>
+          </span>
+          <span>{{ item.specs }}</span>
+        </div>
 
-      <div class="flex_column price_wrap">
-        <span class="flex_row mb10">
-          <el-input class="price_input mr10" v-model="item.num1First" @change="countChange(item)" clearable placeholder="盘点数量" />
-          <el-input class="price_input" v-model="item.num1Two" @change="countChange(item)" clearable placeholder="盘点数量" />
-          <span class="price_unit">{{ item.unit1 }}({{ item.unit1Coefficient }}克)</span>
-        </span>
-        <span class="flex_row mb10">
-          <el-input class="price_input mr10" v-model="item.num2First" @change="countChange(item)" clearable placeholder="盘点数量" />
-          <el-input class="price_input" v-model="item.num2Two" @change="countChange(item)" clearable placeholder="盘点数量" />
-          <span class="price_unit">{{ item.unit2 }}({{ item.unit2Coefficient }}克)</span>
-        </span>
-        <span class="flex_row mb10" v-if="isEmptyUnit(item)">
-          <el-input class="price_input mr10" v-model="item.num3First" @change="countChange(item)" clearable placeholder="盘点数量" />
-          <el-input class="price_input" v-model="item.num3Two" @change="countChange(item)" clearable placeholder="盘点数量" />
-          <span class="price_unit">{{ item.unit3 }}({{ item.unit3Coefficient }}克)</span>
-        </span>
+        <div class="flex_column price_wrap">
+          <div class="flex_row">
+            <el-form-item class="price_input inline_block mr10" prop="num1First">
+              <el-input v-model="item.num1First" @change="countChange(item)" clearable placeholder="盘点数量" />
+            </el-form-item>
+            <el-form-item class="price_input inline_block" prop="num1Two">
+              <el-input v-model="item.num1Two" @change="countChange(item)" clearable placeholder="盘点数量" />
+            </el-form-item>
+            <span class="price_unit">{{ item.unit1 }}({{ item.unit1Coefficient }}克)</span>
+          </div>
+          <div class="flex_row">
+            <el-form-item class="price_input inline_block mr10" prop="num2First">
+              <el-input v-model="item.num2First" @change="countChange(item)" clearable placeholder="盘点数量" />
+            </el-form-item>
+            <el-form-item class="price_input inline_block" prop="num2Two">
+              <el-input v-model="item.num2Two" @change="countChange(item)" clearable placeholder="盘点数量" />
+            </el-form-item>
+            <span class="price_unit">{{ item.unit2 }}({{ item.unit2Coefficient }}克)</span>
+          </div>
+          <div class="flex_row" v-if="isEmptyUnit(item)">
+            <el-form-item class="price_input inline_block mr10" prop="num3First">
+              <el-input v-model="item.num3First" @change="countChange(item)" clearable placeholder="盘点数量" />
+            </el-form-item>
+            <el-form-item class="price_input inline_block" prop="num3Two">
+              <el-input v-model="item.num3Two" @change="countChange(item)" clearable placeholder="盘点数量" />
+            </el-form-item>
+            <span class="price_unit">{{ item.unit3 }}({{ item.unit3Coefficient }}克)</span>
+          </div>
 
-        <span class="flex_row" style="justify-content: space-between">
-          <span class="price_count fz12">盘点数量：{{ countN(item) }}克</span>
-          <span class="price_count fz12">盘点金额：{{ countM(item, index) }}元</span>
-        </span>
+          <span class="flex_row" style="justify-content: space-between">
+            <span class="price_count fz12">盘点数量：{{ countN(item) }}克</span>
+            <span class="price_count fz12">盘点金额：{{ countM(item, index) }}元</span>
+          </span>
+        </div>
+
+  <!--      <div class="flex_column price_wrap">-->
+  <!--        <span class="flex_row mb10">-->
+  <!--          <el-input class="price_input mr10" v-model="item.num1First" @change="countChange(item)" type='number' clearable placeholder="盘点数量" />-->
+  <!--          <el-input class="price_input" v-model="item.num1Two" @change="countChange(item)" type='number' clearable placeholder="盘点数量" />-->
+  <!--          <span class="price_unit">{{ item.unit1 }}({{ item.unit1Coefficient }}克)</span>-->
+  <!--        </span>-->
+  <!--        <span class="flex_row mb10">-->
+  <!--          <el-input class="price_input mr10" v-model="item.num2First" @change="countChange(item)" type='number' clearable placeholder="盘点数量" />-->
+  <!--          <el-input class="price_input" v-model="item.num2Two" @change="countChange(item)" type='number' clearable placeholder="盘点数量" />-->
+  <!--          <span class="price_unit">{{ item.unit2 }}({{ item.unit2Coefficient }}克)</span>-->
+  <!--        </span>-->
+  <!--        <span class="flex_row mb10" v-if="isEmptyUnit(item)">-->
+  <!--          <el-input class="price_input mr10" v-model="item.num3First" @change="countChange(item)" type='number' clearable placeholder="盘点数量" />-->
+  <!--          <el-input class="price_input" v-model="item.num3Two" @change="countChange(item)" type='number' clearable placeholder="盘点数量" />-->
+  <!--          <span class="price_unit">{{ item.unit3 }}({{ item.unit3Coefficient }}克)</span>-->
+  <!--        </span>-->
+
+  <!--        <span class="flex_row" style="justify-content: space-between">-->
+  <!--          <span class="price_count fz12">盘点数量：{{ countN(item) }}克</span>-->
+  <!--          <span class="price_count fz12">盘点金额：{{ countM(item, index) }}元</span>-->
+  <!--        </span>-->
+  <!--      </div>-->
       </div>
-    </div>
+    </el-form>
   </div>
 </template>
 
@@ -46,6 +83,7 @@ import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 import { getProductData } from "@/api/taskInventory";
 import { getHistoryRecord } from "@/api/historyRecord";
 import { countNum, countMony, formateData } from "@/utils/utils";
+import { checkNum } from "@/utils/format";
 import index from "@/store";
 
 
@@ -57,8 +95,35 @@ export default class Product extends Vue {
   private userInfo = JSON.parse(sessionStorage.getItem("userInfo") as string);
   @Prop() info?: any;
   private productData: any = [];
+  private rules = {
+    num1First: [
+      { required: true, message: "请输入盘点数量", trigger: "blur" },
+      { validator: checkNum, trigger: "change" }
+    ],
+    num1Two: [
+      { required: false, validator: checkNum, trigger: "change" }
+    ],
+    num2First: [
+      { required: true, message: "请输入盘点数量", trigger: "blur" },
+      { validator: checkNum, trigger: "change" }
+    ],
+    num2Two: [
+      { required: false, validator: checkNum, trigger: "change" }
+    ],
+    num3First: [
+      { required: true, message: "请输入盘点数量", trigger: "blur" },
+      { validator: checkNum, trigger: "change" }
+    ],
+    num3Two: [
+      { required: false, validator: checkNum, trigger: "change" }
+    ],
+  };
+
   mounted() {
-    this.getTaskInfo()
+    this.getTaskInfo();
+    this.$on("bridge",(val: any)=>{
+      this.submit(val);
+    });
   }
 
   getTaskInfo() {
@@ -116,6 +181,17 @@ export default class Product extends Vue {
     this.$emit("countChange", this.productData);
   }
 
+  submit(val: any) {
+    (this.$refs["ruleForm"] as any).validate((valid: any) => {
+      if (valid) {
+        this.$emit("submit", valid);
+      } else {
+        console.log('error submit!!');
+        return false;
+      }
+    })
+  }
+
   countN(item: any) {
     return countNum(item);
   }
@@ -138,18 +214,19 @@ export default class Product extends Vue {
 }
 
 .product_info {
-  flex: 1;
+  /*flex: 1;*/
+  width: 120px;
   justify-content: center;
   text-align: center;
 }
 
 .price_wrap {
-  flex: 2;
+  flex: 1;
   line-height: 40px;
 
   .price_input {
     /*flex: 2;*/
-    width: 30%;
+    width: 33%;
   }
   .price_unit {
     flex: 1;

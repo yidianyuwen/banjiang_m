@@ -11,7 +11,7 @@
     </el-table>
 
     <div class="flex_row aline_center option_group">
-      <span class="custom_btn custom_shadow bg_orange text_white flex_full" @click="submit()">整改方案提交</span>
+<!--      <span class="custom_btn custom_shadow bg_orange text_white flex_full" @click="submit()">整改方案提交</span>-->
     </div>
   </div>
 </template>

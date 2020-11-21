@@ -28,3 +28,16 @@ export const formatTenThousand = (param: any) => {
 export const formatTenThousandTwoDec = (param: any) => {
   return (Number(param) / 10000).toFixed(2) + "万";
 };
+
+/**
+ * 校验数字
+ * @param rule
+ * @param value
+ * @param callback
+ */
+export const checkNum = (rule: any, value: any, callback: any) => {
+  if (value && isNaN(value)) {
+    callback(new Error('请输入数字值'));
+  }
+  callback();
+};

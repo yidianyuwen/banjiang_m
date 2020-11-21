@@ -8,10 +8,10 @@
         <!--<span v-else class="custom_btn custom_shadow bg_orange text_white" style="width: 70px;" @click="back()">返回</span>-->
       </div>
 
-      <Product :info="this.$route.params.info" @productData="getProductData" @countChange="countChange" />
+      <Product ref="product" :info="this.$route.params.info" @productData="getProductData" @countChange="countChange" @submit="submit" />
 
       <div class="flex_column tips">
-        <span class="text_tip mb5">不能出现三个都未空的，需要填入0</span>
+        <span class="text_tip mb5">不能出现三个都为空的，需要填入0</span>
         <span class="text_tip mb5">仅当日可修改</span>
         <span class="text_tip mb5">第二日按钮置灰</span>
       </div>
@@ -25,7 +25,7 @@
         <span class="fz14 text_center">已盘点： {{ counted }}项</span>
       </span>
 
-      <span class="custom_btn custom_shadow bg_orange text_white flex_full" style="margin: 0 5px" @click="submit()">{{ from === 'history'?'修改':'提交'}}</span>
+      <span class="custom_btn custom_shadow bg_orange text_white flex_full" style="margin: 0 5px" @click="toValidate()">{{ from === 'history'?'修改':'提交'}}</span>
     </div>
   </div>
 </template>
@@ -64,7 +64,7 @@ export default class TaskInventory extends Vue {
   }
 
   mounted(): void {
-    console.log('route', this.$route.params.from)
+    console.log("route", this.$route.params.from);
   }
 
   /* 子组件传回数据 */
@@ -87,8 +87,13 @@ export default class TaskInventory extends Vue {
     this.unCount = data.length - this.counted;
   }
 
+  /* 提交录入-表单校验 */
+  toValidate() {
+    (this.$refs["product"] as any).$emit("bridge", "1");
+  }
+
   /* 提交录入 */
-  submit() {
+  submit(valid: any) {
     const postData = {
       checkFoodDate: "",
       inventoryFoodsReqList: this.productCount,
@@ -101,12 +106,14 @@ export default class TaskInventory extends Vue {
     } else {
       postData.checkFoodDate = this.inventoryData;
     }
-    inventoryRecord(postData).then((res: any) => {
-      this.$router.push({ name: "CustomSuccess", params: { status: '盘点成功', next: 'TaskSelect'  }});
-    }).catch((err: any) => {});
-    // this.$router.push({ name: "CustomSuccess", params: { status: '盘点成功', next: 'TaskSelect'  }});
-  }
 
+    if (valid) {
+      inventoryRecord(postData).then((res: any) => {
+        this.$router.push({ name: "CustomSuccess", params: { status: '盘点成功', next: 'TaskSelect'  }});
+      }).catch((err: any) => {});
+      this.$router.push({ name: "CustomSuccess", params: { status: '盘点成功', next: 'TaskSelect'  }});
+    }
+  }
 }
 </script>
 
