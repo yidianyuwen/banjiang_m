@@ -65,8 +65,8 @@ export const countMony = (param: any) => {
   let num1Two = (parseFloat(param.num1Two || 0) * parseFloat(param.unit1Coefficient)) * parseFloat(param.minOperateUnitPrice);
   let num2First = (parseFloat(param.num2First || 0) * parseFloat(param.unit2Coefficient)) * parseFloat(param.minOperateUnitPrice);
   let num2Two = (parseFloat(param.num2Two || 0) * parseFloat(param.unit2Coefficient)) * parseFloat(param.minOperateUnitPrice);
-  let num3First = (parseFloat(param.num3First || 0) * parseFloat(param.unit3Coefficient)) * parseFloat(param.minOperateUnitPrice);
-  let num3Two = (parseFloat(param.num3Two || 0) * parseFloat(param.unit3Coefficient)) * parseFloat(param.minOperateUnitPrice);
+  let num3First = (parseFloat(param.num3First || 0) * parseFloat(param.unit3Coefficient || 0)) * parseFloat(param.minOperateUnitPrice);
+  let num3Two = (parseFloat(param.num3Two || 0) * parseFloat(param.unit3Coefficient || 0)) * parseFloat(param.minOperateUnitPrice);
 
   return unitMony = num1First + num1Two + num2First + num2Two + num3First + num3Two;
 };

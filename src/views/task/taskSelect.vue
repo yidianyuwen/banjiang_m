@@ -73,6 +73,7 @@ export default class TaskSelect extends Vue {
     text-align: center;
     margin: 0 70px;
     padding: 20px 0;
+    border-radius: 5px;
   }
 }
 

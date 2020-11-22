@@ -40,8 +40,8 @@ import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 import { inventoryRecord } from "@/api/taskInventory";
 import { formateData } from "@/utils/utils";
 
-import Product from "./compontent/product.vue";
 import Header from "@/compontent/Header/header.vue";
+import Product from "./compontent/product.vue";
 
 @Component({
   name: "taskInventory",
