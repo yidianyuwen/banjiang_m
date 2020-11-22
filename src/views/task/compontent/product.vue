@@ -189,7 +189,11 @@ export default class Product extends Vue {
       if (valid) {
         this.$emit("submit", valid);
       } else {
-        console.log('error submit!!');
+        console.log("error submit!!");
+        setTimeout(()=>{
+          const isError: any = document.getElementsByClassName("is-error");
+          isError[0].querySelector("input").focus();
+        }, 100);
         return false;
       }
     })
