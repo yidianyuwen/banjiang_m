@@ -1,72 +1,75 @@
 <template>
   <div>
     <el-form ref="ruleForm" class="flex_column price_wrap" :model="productDataR" label-width="0px">
-      <div class="product_wrap flex_row" v-for="(item, index) in productDataR['data']" :key="index">
-        <div class="flex_column product_info">
+      <div v-for="(item, index) in productDataR['data']" :key="index">
+
+        <div :class="['product_wrap','flex_row', (index%2 == 0)?'dark':null]">
+          <div class="flex_column product_info">
           <span class="flex_column product_info" style="min-height: 120px">
             <span>{{ item.spNo }}</span>
             <span>{{ item.spName }}</span>
           </span>
-          <span>{{ item.specs }}</span>
-        </div>
-
-        <div class="flex_column price_wrap">
-          <div class="flex_row">
-            <el-form-item class="price_input inline_block mr10" :prop="`data.${index}.num1First`" :rules="rules.num1First">
-              <el-input v-model="item.num1First" @change="countChange(item)" clearable placeholder="盘点数量" />
-            </el-form-item>
-            <el-form-item class="price_input inline_block" :prop="`data.${index}.num1Two`" :rules="rules.num1Two">
-              <el-input v-model="item.num1Two" @change="countChange(item)" clearable placeholder="盘点数量" />
-            </el-form-item>
-            <span class="price_unit">{{ item.unit1 }}({{ item.unit1Coefficient }}克)</span>
-          </div>
-          <div class="flex_row">
-            <el-form-item class="price_input inline_block mr10" :prop="`data.${index}.num2First`" :rules="rules.num2First">
-              <el-input v-model="item.num2First" @change="countChange(item)" clearable placeholder="盘点数量" />
-            </el-form-item>
-            <el-form-item class="price_input inline_block" :prop="`data.${index}.num2Two`" :rules="rules.num2Two">
-              <el-input v-model="item.num2Two" @change="countChange(item)" clearable placeholder="盘点数量" />
-            </el-form-item>
-            <span class="price_unit">{{ item.unit2 }}({{ item.unit2Coefficient }}克)</span>
-          </div>
-          <div class="flex_row" v-if="isEmptyUnit(item)">
-            <el-form-item class="price_input inline_block mr10" :prop="`data.${index}.num3First`" :rules="rules.num3First">
-              <el-input v-model="item.num3First" @change="countChange(item)" clearable placeholder="盘点数量" />
-            </el-form-item>
-            <el-form-item class="price_input inline_block" :prop="`data.${index}.num3Two`" :rules="rules.num3Two">
-              <el-input v-model="item.num3Two" @change="countChange(item)" clearable placeholder="盘点数量" />
-            </el-form-item>
-            <span class="price_unit">{{ item.unit3 }}({{ item.unit3Coefficient }}克)</span>
+            <span>{{ item.specs }}</span>
           </div>
 
-          <span class="flex_row" style="justify-content: space-between">
+          <div class="flex_column price_wrap">
+            <div class="flex_row">
+              <el-form-item class="price_input inline_block mr10" :prop="`data.${index}.num1First`" :rules="rules.num1First">
+                <el-input v-model="item.num1First" @change="countChange(item)" clearable placeholder="盘点数量" />
+              </el-form-item>
+              <el-form-item class="price_input inline_block" :prop="`data.${index}.num1Two`" :rules="rules.num1Two">
+                <el-input v-model="item.num1Two" @change="countChange(item)" clearable placeholder="盘点数量" />
+              </el-form-item>
+              <span class="price_unit">{{ item.unit1 }}({{ item.unit1Coefficient }}克)</span>
+            </div>
+            <div class="flex_row">
+              <el-form-item class="price_input inline_block mr10" :prop="`data.${index}.num2First`" :rules="rules.num2First">
+                <el-input v-model="item.num2First" @change="countChange(item)" clearable placeholder="盘点数量" />
+              </el-form-item>
+              <el-form-item class="price_input inline_block" :prop="`data.${index}.num2Two`" :rules="rules.num2Two">
+                <el-input v-model="item.num2Two" @change="countChange(item)" clearable placeholder="盘点数量" />
+              </el-form-item>
+              <span class="price_unit">{{ item.unit2 }}({{ item.unit2Coefficient }}克)</span>
+            </div>
+            <div class="flex_row" v-if="isEmptyUnit(item)">
+              <el-form-item class="price_input inline_block mr10" :prop="`data.${index}.num3First`" :rules="rules.num3First">
+                <el-input v-model="item.num3First" @change="countChange(item)" clearable placeholder="盘点数量" />
+              </el-form-item>
+              <el-form-item class="price_input inline_block" :prop="`data.${index}.num3Two`" :rules="rules.num3Two">
+                <el-input v-model="item.num3Two" @change="countChange(item)" clearable placeholder="盘点数量" />
+              </el-form-item>
+              <span class="price_unit">{{ item.unit3 }}({{ item.unit3Coefficient }}克)</span>
+            </div>
+
+            <span class="flex_row" style="justify-content: space-between">
             <span class="price_count fz12">盘点数量：{{ countN(item) }}克</span>
             <span class="price_count fz12">盘点金额：{{ countM(item, index) }}元</span>
           </span>
+          </div>
+
+          <!--      <div class="flex_column price_wrap">-->
+          <!--        <span class="flex_row mb10">-->
+          <!--          <el-input class="price_input mr10" v-model="item.num1First" @change="countChange(item)" type='number' clearable placeholder="盘点数量" />-->
+          <!--          <el-input class="price_input" v-model="item.num1Two" @change="countChange(item)" type='number' clearable placeholder="盘点数量" />-->
+          <!--          <span class="price_unit">{{ item.unit1 }}({{ item.unit1Coefficient }}克)</span>-->
+          <!--        </span>-->
+          <!--        <span class="flex_row mb10">-->
+          <!--          <el-input class="price_input mr10" v-model="item.num2First" @change="countChange(item)" type='number' clearable placeholder="盘点数量" />-->
+          <!--          <el-input class="price_input" v-model="item.num2Two" @change="countChange(item)" type='number' clearable placeholder="盘点数量" />-->
+          <!--          <span class="price_unit">{{ item.unit2 }}({{ item.unit2Coefficient }}克)</span>-->
+          <!--        </span>-->
+          <!--        <span class="flex_row mb10" v-if="isEmptyUnit(item)">-->
+          <!--          <el-input class="price_input mr10" v-model="item.num3First" @change="countChange(item)" type='number' clearable placeholder="盘点数量" />-->
+          <!--          <el-input class="price_input" v-model="item.num3Two" @change="countChange(item)" type='number' clearable placeholder="盘点数量" />-->
+          <!--          <span class="price_unit">{{ item.unit3 }}({{ item.unit3Coefficient }}克)</span>-->
+          <!--        </span>-->
+
+          <!--        <span class="flex_row" style="justify-content: space-between">-->
+          <!--          <span class="price_count fz12">盘点数量：{{ countN(item) }}克</span>-->
+          <!--          <span class="price_count fz12">盘点金额：{{ countM(item, index) }}元</span>-->
+          <!--        </span>-->
+          <!--      </div>-->
         </div>
-
-  <!--      <div class="flex_column price_wrap">-->
-  <!--        <span class="flex_row mb10">-->
-  <!--          <el-input class="price_input mr10" v-model="item.num1First" @change="countChange(item)" type='number' clearable placeholder="盘点数量" />-->
-  <!--          <el-input class="price_input" v-model="item.num1Two" @change="countChange(item)" type='number' clearable placeholder="盘点数量" />-->
-  <!--          <span class="price_unit">{{ item.unit1 }}({{ item.unit1Coefficient }}克)</span>-->
-  <!--        </span>-->
-  <!--        <span class="flex_row mb10">-->
-  <!--          <el-input class="price_input mr10" v-model="item.num2First" @change="countChange(item)" type='number' clearable placeholder="盘点数量" />-->
-  <!--          <el-input class="price_input" v-model="item.num2Two" @change="countChange(item)" type='number' clearable placeholder="盘点数量" />-->
-  <!--          <span class="price_unit">{{ item.unit2 }}({{ item.unit2Coefficient }}克)</span>-->
-  <!--        </span>-->
-  <!--        <span class="flex_row mb10" v-if="isEmptyUnit(item)">-->
-  <!--          <el-input class="price_input mr10" v-model="item.num3First" @change="countChange(item)" type='number' clearable placeholder="盘点数量" />-->
-  <!--          <el-input class="price_input" v-model="item.num3Two" @change="countChange(item)" type='number' clearable placeholder="盘点数量" />-->
-  <!--          <span class="price_unit">{{ item.unit3 }}({{ item.unit3Coefficient }}克)</span>-->
-  <!--        </span>-->
-
-  <!--        <span class="flex_row" style="justify-content: space-between">-->
-  <!--          <span class="price_count fz12">盘点数量：{{ countN(item) }}克</span>-->
-  <!--          <span class="price_count fz12">盘点金额：{{ countM(item, index) }}元</span>-->
-  <!--        </span>-->
-  <!--      </div>-->
       </div>
     </el-form>
   </div>
@@ -217,7 +220,7 @@ export default class Product extends Vue {
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  margin: 25px 0;
+  padding: 25px 0;
 }
 
 .product_info {
