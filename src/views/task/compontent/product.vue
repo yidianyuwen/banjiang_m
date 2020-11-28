@@ -14,31 +14,31 @@
 
           <div class="flex_column price_wrap">
             <div class="flex_row">
-              <el-form-item class="price_input inline_block mr10" :prop="`data.${index}.num1First`" :rules="rules.num1First">
+              <el-form-item class="price_input inline_block mr10" :prop="`data.${index}.num1First`" :rules="((item.num2First&&item.num2First !== '')||(item.num3First&&item.num3First !== ''))?{required: false,trigger: 'blur'}:rules.num1First">
                 <el-input v-model="item.num1First" @change="countChange(item)" clearable placeholder="盘点数量" />
               </el-form-item>
               <el-form-item class="price_input inline_block" :prop="`data.${index}.num1Two`" :rules="rules.num1Two">
                 <el-input v-model="item.num1Two" @change="countChange(item)" clearable placeholder="盘点数量" />
               </el-form-item>
-              <span class="price_unit">{{ item.unit1 }}({{ item.unit1Coefficient }}克)</span>
+              <span class="price_unit">{{ item.unit1 }}</span>
             </div>
             <div class="flex_row">
-              <el-form-item class="price_input inline_block mr10" :prop="`data.${index}.num2First`" :rules="rules.num2First">
+              <el-form-item class="price_input inline_block mr10" :prop="`data.${index}.num2First`" :rules="((item.num1First&&item.num1First !== '')||(item.num3First&&item.num3First !== ''))?{required: false,trigger: 'blur'}:rules.num2First">
                 <el-input v-model="item.num2First" @change="countChange(item)" clearable placeholder="盘点数量" />
               </el-form-item>
               <el-form-item class="price_input inline_block" :prop="`data.${index}.num2Two`" :rules="rules.num2Two">
                 <el-input v-model="item.num2Two" @change="countChange(item)" clearable placeholder="盘点数量" />
               </el-form-item>
-              <span class="price_unit">{{ item.unit2 }}({{ item.unit2Coefficient }}克)</span>
+              <span class="price_unit">{{ item.unit2 }}</span>
             </div>
             <div class="flex_row" v-if="isEmptyUnit(item)">
-              <el-form-item class="price_input inline_block mr10" :prop="`data.${index}.num3First`" :rules="rules.num3First">
+              <el-form-item class="price_input inline_block mr10" :prop="`data.${index}.num3First`" :rules="((item.num1First&&item.num1First !== '')||(item.num2First&&item.num2First !== ''))?{required: false,trigger: 'blur'}:rules.num3First">
                 <el-input v-model="item.num3First" @change="countChange(item)" clearable placeholder="盘点数量" />
               </el-form-item>
               <el-form-item class="price_input inline_block" :prop="`data.${index}.num3Two`" :rules="rules.num3Two">
                 <el-input v-model="item.num3Two" @change="countChange(item)" clearable placeholder="盘点数量" />
               </el-form-item>
-              <span class="price_unit">{{ item.unit3 }}({{ item.unit3Coefficient }}克)</span>
+              <span class="price_unit">{{ item.unit3 }}</span>
             </div>
 
             <span class="flex_row" style="justify-content: space-between">
@@ -82,12 +82,11 @@
  * Last Modify:
  */
 
-import { Component, Vue, Prop, Watch } from "vue-property-decorator";
-import { getProductData } from "@/api/taskInventory";
-import { getHistoryRecord } from "@/api/historyRecord";
-import { countNum, countMony, formateData } from "@/utils/utils";
-import { checkNum } from "@/utils/format";
-import index from "@/store";
+import {Component, Prop, Vue} from "vue-property-decorator";
+import {getProductData} from "@/api/taskInventory";
+import {getHistoryRecord} from "@/api/historyRecord";
+import {countMony, countNum, formateData} from "@/utils/utils";
+import {checkNum} from "@/utils/format";
 
 
 @Component({
@@ -99,29 +98,33 @@ export default class Product extends Vue {
   @Prop() info?: any;
   private productData: any = [];
   private productDataR: any = {};
-  private rules = {
-    num1First: [
-      { required: true, message: "请输入盘点数量", trigger: "blur" },
-      { validator: checkNum, trigger: "change" }
-    ],
-    num1Two: [
-      { required: false, validator: checkNum, trigger: "change" }
-    ],
-    num2First: [
-      { required: true, message: "请输入盘点数量", trigger: "blur" },
-      { validator: checkNum, trigger: "change" }
-    ],
-    num2Two: [
-      { required: false, validator: checkNum, trigger: "change" }
-    ],
-    num3First: [
-      { required: true, message: "请输入盘点数量", trigger: "blur" },
-      { validator: checkNum, trigger: "change" }
-    ],
-    num3Two: [
-      { required: false, validator: checkNum, trigger: "change" }
-    ],
-  };
+  private valid = true;
+
+  get rules () {
+    return {
+      num1First: [
+        {required: true, message: "请输入盘点数量", trigger: "blur"},
+        {validator: checkNum, trigger: "change"}
+      ],
+      num1Two: [
+        {required: false, validator: checkNum, trigger: "change"}
+      ],
+      num2First: [
+        {required: true, message: "请输入盘点数量", trigger: "blur"},
+        {validator: checkNum, trigger: "change"}
+      ],
+      num2Two: [
+        {required: false, validator: checkNum, trigger: "change"}
+      ],
+      num3First: [
+        {required: true, message: "请输入盘点数量", trigger: "blur"},
+        {validator: checkNum, trigger: "change"}
+      ],
+      num3Two: [
+        {required: false, validator: checkNum, trigger: "change"}
+      ],
+    };
+  }
 
   mounted() {
     this.getTaskInfo();
@@ -188,7 +191,7 @@ export default class Product extends Vue {
   }
 
   submit(val: any) {
-    (this.$refs["ruleForm"] as any).validate((valid: any) => {
+    (this.$refs["ruleForm"] as any).validate((valid: any, el: any) => {
       if (valid) {
         this.$emit("submit", valid);
       } else {

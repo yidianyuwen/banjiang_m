@@ -110,6 +110,15 @@ $mobile_width:414px;
 .inline_block {
   display: inline-block;
 }
+.justify_start {
+  justify-content: flex-start;
+}
+.justify_between {
+  justify-content: space-between;
+}
+.justify_center {
+  justify-content: center;
+}
 .justify_end {
   justify-content: flex-end;
 }

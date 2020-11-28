@@ -1,14 +1,25 @@
 <template>
-  <div class="difference_wrap flex_column">
+  <div class="difference_wrap flex_column justify_start">
     <Header headerTitle="差异分析" />
 
-    <span class="difference_rate">本次差异率： {{ differenceRate }}%</span>
+    <span class="difference_rate">本次差异率： {{ differenceData[0].diffRate || '' }}</span>
 
-    <el-table :data="differenceData" border style="width: 100%" :header-cell-style="{ 'background-color': '#fafafa' }">
-      <el-table-column prop="spName" label="sp名称" align="center"></el-table-column>
-      <el-table-column prop="difference" label="差异量（克）" align="center"></el-table-column>
-      <el-table-column prop="differenceAmount" label="差异金额" align="center"></el-table-column>
-    </el-table>
+    <el-row class="flex_full">
+      <el-table :data="differenceData" border style="width: 100%" :header-cell-style="{ 'background-color': '#fafafa' }">
+        <el-table-column prop="shopName" label="sp名称" align="center"></el-table-column>
+        <el-table-column prop="diffTotalAmt" label="差异金额" align="center"></el-table-column>
+        <el-table-column prop="diffRate" label="差异率" align="center"></el-table-column>
+      </el-table>
+
+      <el-pagination
+          style="overflow: scroll"
+          @current-change="handleCurrentChange"
+          :current-page.sync="currentPage"
+          :page-size="pageSize"
+          layout="prev, pager, next"
+          :total="total">
+      </el-pagination>
+    </el-row>
 
     <div class="flex_row aline_center option_group">
 <!--      <span class="custom_btn custom_shadow bg_orange text_white flex_full" @click="submit()">整改方案提交</span>-->
@@ -36,8 +47,11 @@ import Header from "@/compontent/Header/header.vue";
 })
 export default class DifferenceAnalysis extends Vue {
   private userInfo = JSON.parse(sessionStorage.getItem("userInfo") as string);
-  private differenceRate = '7.00';
-  private differenceData: any = [];
+  private differenceRate = "7.00";
+  private differenceData: any = [{ diffRate: "" }];
+  private currentPage = 1;
+  private pageSize = 10;
+  private total = 0;
 
   mounted() {
     this.getDifferent();
@@ -50,30 +64,21 @@ export default class DifferenceAnalysis extends Vue {
       shopId: this.userInfo.shopId,
       shopName: this.userInfo.shopName,
       spName: this.userInfo.spName,
-      spNo: this.userInfo.spNo
+      spNo: this.userInfo.spNo,
+      pageSize: this.pageSize,
+      pageNo: this.currentPage
     };
-    this.differenceData = [
-      {
-        spName: "什么都不是",
-        difference: "半月盘",
-        differenceAmount: ''
-      },
-      {
-        spName: "2016-05-02",
-        difference: "周盘",
-        differenceAmount: 1000
-      },
-      {
-        date: "2016-05-02",
-        period: "日盘",
-        differenceAmount: ''
-      }
-    ];
     getDifferent(posData).then((res: any) => {
-      console.log("res", res);
+      this.total = res.data.count;
+      this.differenceData = res.data.queryTotalDiffRes;
     }).catch((err: any) => {
       console.log('err', err);
     });
+  }
+
+  handleCurrentChange(val: any) {
+    this.currentPage = val;
+    this.getDifferent();
   }
 
   submit() {
@@ -84,7 +89,6 @@ export default class DifferenceAnalysis extends Vue {
 
 <style scoped lang="scss">
 .difference_wrap {
-  justify-content: space-between;
   width: 100%;
   height: 100%;
 

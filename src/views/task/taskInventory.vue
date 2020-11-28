@@ -3,8 +3,10 @@
     <div class="flex_column task_inventory_wrap">
       <Header headerTitle="任务盘点" />
 
-      <div class="justify_end" style="display: flex; padding: 15px">
-        <el-date-picker v-if="from !== 'history'" v-model="inventoryData" type="date" placeholder="选择日期" value-format="yyyyMMdd"></el-date-picker>
+      <div class="justify_end" style="display: flex; margin: 15px;">
+        <div style="min-height: 42px" v-if="from !== 'history'">
+          <el-date-picker v-model="inventoryData" type="date" placeholder="选择日期" value-format="yyyyMMdd"></el-date-picker>
+        </div>
         <!--<span v-else class="custom_btn custom_shadow bg_orange text_white" style="width: 70px;" @click="back()">返回</span>-->
       </div>
 
@@ -53,7 +55,7 @@ import Product from "./compontent/product.vue";
 export default class TaskInventory extends Vue {
   private userInfo = JSON.parse(sessionStorage.getItem("userInfo") as string);
   private from = this.$route.params.from || "";
-  private inventoryData = "";
+  private inventoryData = new Date();
   private productCount = [];
   private counted = 0;
   private unCount = 0;
@@ -95,7 +97,7 @@ export default class TaskInventory extends Vue {
   /* 提交录入 */
   submit(valid: any) {
     const postData = {
-      checkFoodDate: "",
+      checkFoodDate: this.inventoryData,
       inventoryFoodsReqList: this.productCount,
       inventoryTotalAmt: this.countAmount,
       shopId: this.userInfo.shopId,

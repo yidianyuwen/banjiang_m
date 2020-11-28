@@ -12,4 +12,4 @@ import TYPES from './types'
  * @param params
  */
 export const getDifferent = (params: TYPES.different) =>
-  request.post('/banjiang/inventory/calculateSpRate', params);
+  request.post('/banjiang/inventory/queryDiffRate', params);

@@ -47,11 +47,12 @@ export const random = () => {
 export const countNum = (param: any) => {
   let unitNum = 0;
 
-  let num1 = ((parseInt(param.num1First || 0)) * param.unit1Coefficient + parseInt(param.num1Two || 0) * param.unit1Coefficient) ;
-  let num2 = (parseInt(param.num2First || 0) * param.unit2Coefficient + parseInt(param.num2Two || 0) * param.unit2Coefficient) ;
-  let num3 = (parseInt(param.num3First || 0) * param.unit3Coefficient + parseInt(param.num3Two || 0) * param.unit3Coefficient) ;
+  let num1 = ((parseInt(param.num1First || 0)) * Number(param.unit1Coefficient) + parseInt(param.num1Two || 0) * Number(param.unit1Coefficient)) ;
+  let num2 = (parseInt(param.num2First || 0) * Number(param.unit2Coefficient) + parseInt(param.num2Two || 0) * Number(param.unit2Coefficient)) ;
+  let num3 = (parseInt(param.num3First || 0) * Number(param.unit3Coefficient) + parseInt(param.num3Two || 0) * Number(param.unit3Coefficient)) ;
 
-  return unitNum = num1 + num2 + num3;
+  unitNum = parseFloat((num1 + num2 + num3).toFixed(2));
+  return unitNum;
 };
 
 /**
@@ -61,14 +62,15 @@ export const countNum = (param: any) => {
 export const countMony = (param: any) => {
   let unitMony = 0;
 
-  let num1First = (parseFloat(param.num1First || 0) * parseFloat(param.unit1Coefficient)) * parseFloat(param.minOperateUnitPrice);
-  let num1Two = (parseFloat(param.num1Two || 0) * parseFloat(param.unit1Coefficient)) * parseFloat(param.minOperateUnitPrice);
-  let num2First = (parseFloat(param.num2First || 0) * parseFloat(param.unit2Coefficient)) * parseFloat(param.minOperateUnitPrice);
-  let num2Two = (parseFloat(param.num2Two || 0) * parseFloat(param.unit2Coefficient)) * parseFloat(param.minOperateUnitPrice);
-  let num3First = (parseFloat(param.num3First || 0) * parseFloat(param.unit3Coefficient || 0)) * parseFloat(param.minOperateUnitPrice);
-  let num3Two = (parseFloat(param.num3Two || 0) * parseFloat(param.unit3Coefficient || 0)) * parseFloat(param.minOperateUnitPrice);
+  let num1First = (Number(param.num1First || 0) * Number(param.unit1Coefficient)) * Number(param.minOperateUnitPrice);
+  let num1Two = (Number(param.num1Two || 0) * Number(param.unit1Coefficient)) * Number(param.minOperateUnitPrice);
+  let num2First = (Number(param.num2First || 0) * Number(param.unit2Coefficient)) * Number(param.minOperateUnitPrice);
+  let num2Two = (Number(param.num2Two || 0) * Number(param.unit2Coefficient)) * Number(param.minOperateUnitPrice);
+  let num3First = (Number(param.num3First || 0) * Number(param.unit3Coefficient || 0)) * Number(param.minOperateUnitPrice);
+  let num3Two = (Number(param.num3Two || 0) * Number(param.unit3Coefficient || 0)) * Number(param.minOperateUnitPrice);
 
-  return unitMony = num1First + num1Two + num2First + num2Two + num3First + num3Two;
+  unitMony = parseFloat((num1First + num1Two + num2First + num2Two + num3First + num3Two).toFixed(2));
+  return unitMony;
 };
 
 /**
